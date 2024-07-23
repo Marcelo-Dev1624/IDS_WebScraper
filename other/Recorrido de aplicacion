@@ -1,0 +1,12 @@
+paso 1: Obtener datos de Penta, Excel autogenerado
+paso 2: Leer valores del excel, para cada registro
+        1. Aduana: Ej. 001 (siempre 3 digitos)
+        2. Año: (año)
+        2. Numero DUA: 12345 (siempre 5 numero)
+
+paso 3: Ejecutar script (ir a la pagina, consultar con los valores)
+paso 4: Obtener valores deseados en base a la busqueda (solo 2 hasta el momento)
+
+paso 5: Guardar valores en algun lado(Ej. mismo Excel en columnas vacias)
+
+listo
