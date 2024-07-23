@@ -1,0 +1,14 @@
+{
+    "name": "IDS-web-scraper-app",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": {
+      "xlsx": "^0.18.0",
+      "puppeteer": "^13.0.1",
+      "tesseract.js": "^3.5.0",
+      "sharp": "^0.29.2",
+      "fs": "0.0.1-security",
+      "path": "^0.12.7"
+    }
+  }
+  
