@@ -6,6 +6,7 @@ const Tesseract = require("tesseract.js");  // Importing Tesseract.js for OCR (O
 const sharp = require("sharp");  // Importing sharp for image processing
 
 // Function to read and normalize data from an Excel file
+// Function to read and normalize data from an Excel file
 function readExcelFile(filePath) {
   if (!fs.existsSync(filePath)) {  // Check if file exists at the given path
     throw new Error(`File not found: ${filePath}`);
@@ -53,8 +54,20 @@ function readExcelFile(filePath) {
     };
   });
 
+  // Find the first record without 'Localización Actual' and 'Localización Destino'
+  const incompleteRecord = data.find(row =>
+    !row['Localización Actual'] || !row['Localización Destino']
+  );
+
+  if (incompleteRecord) {
+    console.log("First incomplete record found:", incompleteRecord);
+  } else {
+    console.log("All records are complete.");
+  }
+
   return data;
 }
+
 
 // Function to update a specific column in the Excel file
 function updateExcelFile(filePath, updatedData) {
@@ -169,6 +182,11 @@ async function scrapeData(page, record) {
   await page.type('#vVCODI_ADUA', colAduana);  // Type Aduana into input field
   await page.type('#vVANO_PRE', colAno);  // Type Año into input field
   await page.type('#vVNUME_CORR', colNumero);  // Type Numero into input field
+
+  console.log("Aduana: " + colAduana);
+  console.log("Año: " + colAno);
+  console.log("Numero: " + colNumero);
+  
 
   let captchaSolved = false;
   while (!captchaSolved) {
