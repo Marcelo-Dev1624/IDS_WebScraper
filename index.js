@@ -6,7 +6,6 @@ const Tesseract = require("tesseract.js");  // Importing Tesseract.js for OCR (O
 const sharp = require("sharp");  // Importing sharp for image processing
 
 // Function to read and normalize data from an Excel file
-// Function to read and normalize data from an Excel file
 function readExcelFile(filePath) {
   if (!fs.existsSync(filePath)) {  // Check if file exists at the given path
     throw new Error(`File not found: ${filePath}`);
@@ -18,55 +17,59 @@ function readExcelFile(filePath) {
   let data = XLSX.utils.sheet_to_json(worksheet);  // Convert the worksheet to JSON array
 
   // Normalize data to ensure all values are strings
-  data = data.map(row => {
-    return {
-        Aduana: row['Aduana'] ? row['Aduana'].toString() : '',  // Convert Aduana to string or empty string if undefined
-        'Año': row['Año'] ? row['Año'].toString() : '',  // Convert Año to string or empty string if undefined
-        Numero: row['Numero'] ? row['Numero'].toString() : '',  // Convert Numero to string or empty string if undefined
-        Item: row['Item'] ? row['Item'].toString() : '',  // Convert Item to string or empty string if undefined
-        Fecha: row['Fecha'] ? row['Fecha'].toString() : '',  // Convert Fecha to string or empty string if undefined
-        Aduana_1: row['Aduana_1'] ? row['Aduana_1'].toString() : '',  // Convert Aduana_1 to string or empty string if undefined
-        Regimen: row['Regimen'] ? row['Regimen'].toString() : '',  // Convert Regimen to string or empty string if undefined
-        Modalidad: row['Modalidad'] ? row['Modalidad'].toString() : '',  // Convert Modalidad to string or empty string if undefined
-        Importador: row['Importador'] ? row['Importador'].toString() : '',  // Convert Importador to string or empty string if undefined
-        Marca: row['Marca'] ? row['Marca'].toString() : '',  // Convert Marca to string or empty string if undefined
-        Modelo: row['Modelo'] ? row['Modelo'].toString() : '',  // Convert Modelo to string or empty string if undefined
-        Factura: row['Factura'] ? row['Factura'].toString() : '',  // Convert Factura to string or empty string if undefined
-        'Código SAC': row['Código SAC'] ? row['Código SAC'].toString() : '',  // Convert Código SAC to string or empty string if undefined
-        'Vía Transporte': row['Vía Transporte'] ? row['Vía Transporte'].toString() : '',  // Convert Vía Transporte to string or empty string if undefined
-        'País de Origen': row['País de Origen'] ? row['País de Origen'].toString() : '',  // Convert País de Origen to string or empty string if undefined
-        'Pais de Procedencia': row['Pais de Procedencia'] ? row['Pais de Procedencia'].toString() : '',  // Convert Pais de Procedencia to string or empty string if undefined
-        'Pais de Adquisición': row['Pais de Adquisición'] ? row['Pais de Adquisición'].toString() : '',  // Convert Pais de Adquisición to string or empty string if undefined
-        'Cantidad Comercial': row['Cantidad Comercial'] ? row['Cantidad Comercial'].toString() : '',  // Convert Cantidad Comercial to string or empty string if undefined
-        'Unidad de Medida': row['Unidad de Medida'] ? row['Unidad de Medida'].toString() : '',  // Convert Unidad de Medida to string or empty string if undefined
-        Bultos: row['Bultos'] ? row['Bultos'].toString() : '',  // Convert Bultos to string or empty string if undefined
-        'U$S FOB': row['U$S FOB'] ? row['U$S FOB'].toString() : '',  // Convert U$S FOB to string or empty string if undefined
-        'U$S FOB, Unit.': row['U$S FOB, Unit.'] ? row['U$S FOB, Unit.'].toString() : '',  // Convert U$S FOB, Unit. to string or empty string if undefined
-        'U$S Flete': row['U$S Flete'] ? row['U$S Flete'].toString() : '',  // Convert U$S Flete to string or empty string if undefined
-        'U$S Seguro': row['U$S Seguro'] ? row['U$S Seguro'].toString() : '',  // Convert U$S Seguro to string or empty string if undefined
-        'U$S CIF': row['U$S CIF'] ? row['U$S CIF'].toString() : '',  // Convert U$S CIF to string or empty string if undefined
-        'U$S Unitario': row['U$S Unitario'] ? row['U$S Unitario'].toString() : '',  // Convert U$S Unitario to string or empty string if undefined
-        'KGS. Netos': row['KGS. Netos'] ? row['KGS. Netos'].toString() : '',  // Convert KGS. Netos to string or empty string if undefined
-        'Kgs. Brutos': row['Kgs. Brutos'] ? row['Kgs. Brutos'].toString() : '',  // Convert Kgs. Brutos to string or empty string if undefined
-        'Descripción de Mercadería': row['Descripción de Mercadería'] ? row['Descripción de Mercadería'].toString() : '',  // Convert Descripción de Mercadería to string or empty string if undefined
-        'Localización Actual': row['Localización Actual'] ? row['Localización Actual'].toString() : '',  // Convert Localización Actual to string or empty string if undefined
-        'Localización Destino': row['Localización Destino'] ? row['Localización Destino'].toString() : ''  // Convert Localización Destino to string or empty string if undefined
-    };
-  });
+  data = data.map(row => ({
+    Aduana: row['Aduana'] ? row['Aduana'].toString() : '',
+    'Año': row['Año'] ? row['Año'].toString() : '',
+    Numero: row['Numero'] ? row['Numero'].toString() : '',
+    Item: row['Item'] ? row['Item'].toString() : '',
+    Fecha: row['Fecha'] ? row['Fecha'].toString() : '',
+    Aduana_1: row['Aduana_1'] ? row['Aduana_1'].toString() : '',
+    Regimen: row['Regimen'] ? row['Regimen'].toString() : '',
+    Modalidad: row['Modalidad'] ? row['Modalidad'].toString() : '',
+    Importador: row['Importador'] ? row['Importador'].toString() : '',
+    Marca: row['Marca'] ? row['Marca'].toString() : '',
+    Modelo: row['Modelo'] ? row['Modelo'].toString() : '',
+    Factura: row['Factura'] ? row['Factura'].toString() : '',
+    'Código SAC': row['Código SAC'] ? row['Código SAC'].toString() : '',
+    'Vía Transporte': row['Vía Transporte'] ? row['Vía Transporte'].toString() : '',
+    'País de Origen': row['País de Origen'] ? row['País de Origen'].toString() : '',
+    'Pais de Procedencia': row['Pais de Procedencia'] ? row['Pais de Procedencia'].toString() : '',
+    'Pais de Adquisición': row['Pais de Adquisición'] ? row['Pais de Adquisición'].toString() : '',
+    'Cantidad Comercial': row['Cantidad Comercial'] ? row['Cantidad Comercial'].toString() : '',
+    'Unidad de Medida': row['Unidad de Medida'] ? row['Unidad de Medida'].toString() : '',
+    Bultos: row['Bultos'] ? row['Bultos'].toString() : '',
+    'U$S FOB': row['U$S FOB'] ? row['U$S FOB'].toString() : '',
+    'U$S FOB, Unit.': row['U$S FOB, Unit.'] ? row['U$S FOB, Unit.'].toString() : '',
+    'U$S Flete': row['U$S Flete'] ? row['U$S Flete'].toString() : '',
+    'U$S Seguro': row['U$S Seguro'] ? row['U$S Seguro'].toString() : '',
+    'U$S CIF': row['U$S CIF'] ? row['U$S CIF'].toString() : '',
+    'U$S Unitario': row['U$S Unitario'] ? row['U$S Unitario'].toString() : '',
+    'KGS. Netos': row['KGS. Netos'] ? row['KGS. Netos'].toString() : '',
+    'Kgs. Brutos': row['Kgs. Brutos'] ? row['Kgs. Brutos'].toString() : '',
+    'Descripción de Mercadería': row['Descripción de Mercadería'] ? row['Descripción de Mercadería'].toString() : '',
+    'Localización Actual': row['Localización Actual'] ? row['Localización Actual'].toString() : '',
+    'Localización Destino': row['Localización Destino'] ? row['Localización Destino'].toString() : ''
+  }));
 
-  // Find the first record without 'Localización Actual' and 'Localización Destino'
-  const incompleteRecord = data.find(row =>
-    !row['Localización Actual'] || !row['Localización Destino']
-  );
+  // Find the index of the first record without 'Localización Actual' and 'Localización Destino'
+  let firstIncompleteIndex = -1;
+  for (let i = 0; i < data.length; i++) {
+    if (!data[i]['Localización Actual'] || !data[i]['Localización Destino']) {
+      firstIncompleteIndex = i;
+      break;
+    }
+  }
 
-  if (incompleteRecord) {
-    console.log("First incomplete record found:", incompleteRecord);
+  if (firstIncompleteIndex !== -1) {
+    console.log(`Starting from record ${firstIncompleteIndex + 1} due to missing data.`);
+    data = data.slice(firstIncompleteIndex); // Slice the array to start from the first incomplete record
   } else {
     console.log("All records are complete.");
   }
 
   return data;
 }
+
 
 
 // Function to update a specific column in the Excel file
@@ -174,7 +177,7 @@ async function solveCaptcha(page) {
 }
 
 // Function to scrape data from the website
-async function scrapeData(page, record) {
+async function scrapeData(page, record, index) {
   const colAduana = record["Aduana"];  // Get Aduana from record
   const colAno = record["Año"];  // Get Año from record
   const colNumero = record["Numero"];  // Get Numero from record
@@ -186,7 +189,6 @@ async function scrapeData(page, record) {
   console.log("Aduana: " + colAduana);
   console.log("Año: " + colAno);
   console.log("Numero: " + colNumero);
-  
 
   let captchaSolved = false;
   while (!captchaSolved) {
@@ -208,7 +210,7 @@ async function scrapeData(page, record) {
       if (localizacionActualElement && localizacionDestinoElement) {
         console.log(`Localización Actual: ${localizacionActualElement}`);
         console.log(`Localización Destino: ${localizacionDestinoElement}`);
-        
+
         const updatedData = [
           {
             Numero: colNumero,
@@ -216,8 +218,12 @@ async function scrapeData(page, record) {
             'Localización Destino': localizacionDestinoElement
           }
         ];
-        
+
         updateExcelFile('Penta.xlsx', updatedData);  // Update Excel file with Localización Actual and Localización Destino
+
+        // Print success message with line number
+        console.log(`Registro ${colNumero} (linea ${index + 2} en Excel) fue procesado con éxito.`);
+        
         return true;
       } else {
         console.log("No data found on the page.");
@@ -236,7 +242,7 @@ async function scrapeData(page, record) {
 // Main function to control the workflow
 async function main() {
   const filePath = path.join(__dirname, 'Penta.xlsx');  // Define Excel file path
-  
+
   // Check if file exists before proceeding
   if (!fs.existsSync(filePath)) {
     console.error(`File not found: ${filePath}`);
@@ -251,7 +257,7 @@ async function main() {
   for (let i = 0; i < data.length; i++) {
     try {
       await page.goto('https://ticaconsultas.hacienda.go.cr/Tica/hcimppon.aspx');  // Navigate to the specified URL
-      const success = await scrapeData(page, data[i]);  // Scrape data for each record in data array
+      const success = await scrapeData(page, data[i], i);  // Scrape data for each record in data array
 
       if (success) {
         console.log(`Record ${i + 1} processed successfully.`);
